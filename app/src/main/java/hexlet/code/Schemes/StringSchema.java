@@ -8,7 +8,7 @@ public class StringSchema {
     private Map<String, Predicate<String>> validators = new HashMap<>();
 
     public StringSchema required() {
-        validators.put("required", value -> value != null && !value.isEmpty());
+        validators.put("required", value -> value != null && !value.isEmpty() && value instanceof String);
         return this;
     }
 

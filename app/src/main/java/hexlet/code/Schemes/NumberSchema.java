@@ -1,12 +1,6 @@
 package hexlet.code.Schemes;
 
-import java.util.function.Predicate;
-import java.util.HashMap;
-import java.util.Map;
-
-public class NumberSchema {
-    private Map<String, Predicate<Integer>> validators = new HashMap<>();
-
+public class NumberSchema extends BaseSchema<Integer> {
     public NumberSchema required() {
         validators.put("required", value -> value != null && (value instanceof Integer));
         return this;
@@ -20,10 +14,5 @@ public class NumberSchema {
     public NumberSchema range(Integer left, Integer right) {
         validators.put("range", value -> value == null || (left <= value && value <= right));
         return this;
-    }
-
-
-    public boolean isValid(Integer value) {
-        return validators.values().stream().allMatch(rule -> rule.test(value));
     }
 }

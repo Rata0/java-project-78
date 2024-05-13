@@ -3,8 +3,8 @@ package hexlet.code;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import hexlet.code.Schemes.BaseSchema;
-import hexlet.code.Schemes.MapSchema;
+import hexlet.code.schemes.BaseSchema;
+import hexlet.code.schemes.MapSchema;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;

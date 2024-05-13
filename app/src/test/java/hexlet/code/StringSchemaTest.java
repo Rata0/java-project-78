@@ -2,7 +2,7 @@ package hexlet.code;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import hexlet.code.Schemes.StringSchema;
+import hexlet.code.schemes.StringSchema;
 import org.junit.jupiter.api.Test;
 
 public class StringSchemaTest {

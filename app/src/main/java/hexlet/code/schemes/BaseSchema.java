@@ -1,4 +1,4 @@
-package hexlet.code.Schemes;
+package hexlet.code.schemes;
 
 import java.util.HashMap;
 import java.util.Map;

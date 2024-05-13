@@ -1,4 +1,4 @@
-package hexlet.code.schemes;
+package hexlet.code.schemas;
 
 public class StringSchema extends BaseSchema<String> {
     public StringSchema required() {

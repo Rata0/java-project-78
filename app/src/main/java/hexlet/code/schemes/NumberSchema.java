@@ -14,7 +14,12 @@ public class NumberSchema extends BaseSchema<Integer> {
     }
 
     public NumberSchema range(Integer left, Integer right) {
-        validators.put("range", value -> value == null || (left <= value && value <= right));
+        validators.put("range", value -> {
+            if (value == null) {
+                return true;
+            }
+            return left <= value && value <= right;
+        });
         return this;
     }
 }

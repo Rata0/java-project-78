@@ -18,7 +18,4 @@ public class Validator {
         return new MapSchema();
     }
 
-    public BaseSchema baseSchema() {
-        return new BaseSchema();
-    }
 }

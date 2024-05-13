@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class MapSchema<V> extends BaseSchema<Map<String, V>> {
-    private Map<String, BaseSchema<V>> schemaShapeMap = new HashMap<>();
+    private Map<String, BaseSchema<? super V>> schemaShapeMap = new HashMap<>();
 
     public MapSchema<V> required() {
         validators.put("required", Objects::nonNull);
@@ -17,7 +17,7 @@ public class MapSchema<V> extends BaseSchema<Map<String, V>> {
         return this;
     }
 
-    public void shape(Map<String, BaseSchema<V>> validators) {
+    public void shape(Map<String, BaseSchema<? super V>> validators) {
         schemaShapeMap = validators;
     }
 
@@ -28,9 +28,9 @@ public class MapSchema<V> extends BaseSchema<Map<String, V>> {
             return result;
         }
 
-        for (Map.Entry<String, BaseSchema<V>> entry : schemaShapeMap.entrySet()) {
+        for (Map.Entry<String, BaseSchema<? super V>> entry : schemaShapeMap.entrySet()) {
             String key = entry.getKey();
-            BaseSchema<V> schema = entry.getValue();
+            BaseSchema<? super V> schema = entry.getValue();
             V val = value.get(key);
             if (val == null || !schema.isValid(val)) {
                 return false;

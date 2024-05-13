@@ -2,7 +2,7 @@ package hexlet.code.schemes;
 
 public class StringSchema extends BaseSchema<String> {
     public StringSchema required() {
-        validators.put("required", value -> value != null && !value.isEmpty() && value instanceof String);
+        validators.put("required", value -> value != null && !value.isEmpty());
         return this;
     }
 

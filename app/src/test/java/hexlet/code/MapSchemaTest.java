@@ -3,7 +3,6 @@ package hexlet.code;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import hexlet.code.schemes.BaseSchema;
 import hexlet.code.schemes.MapSchema;
 import org.junit.jupiter.api.Test;
 

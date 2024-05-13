@@ -1,6 +1,5 @@
 package hexlet.code;
 
-import hexlet.code.schemes.BaseSchema;
 import hexlet.code.schemes.StringSchema;
 import hexlet.code.schemes.NumberSchema;
 import hexlet.code.schemes.MapSchema;

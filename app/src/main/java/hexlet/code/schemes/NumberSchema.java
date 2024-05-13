@@ -1,8 +1,10 @@
 package hexlet.code.schemes;
 
+import java.util.Objects;
+
 public class NumberSchema extends BaseSchema<Integer> {
     public NumberSchema required() {
-        validators.put("required", value -> value != null && (value instanceof Integer));
+        validators.put("required", Objects::nonNull);
         return this;
     }
 

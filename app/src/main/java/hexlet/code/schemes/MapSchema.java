@@ -2,12 +2,13 @@ package hexlet.code.schemes;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class MapSchema<V> extends BaseSchema<Map<String, V>> {
     private Map<String, BaseSchema<V>> schemaShapeMap = new HashMap<>();
 
     public MapSchema<V> required() {
-        validators.put("required", value -> value != null);
+        validators.put("required", Objects::nonNull);
         return this;
     }
 
@@ -16,9 +17,8 @@ public class MapSchema<V> extends BaseSchema<Map<String, V>> {
         return this;
     }
 
-    public MapSchema<V> shape(Map<String, BaseSchema<V>> validators) {
+    public void shape(Map<String, BaseSchema<V>> validators) {
         schemaShapeMap = validators;
-        return this;
     }
 
     @Override
@@ -31,7 +31,8 @@ public class MapSchema<V> extends BaseSchema<Map<String, V>> {
         for (Map.Entry<String, BaseSchema<V>> entry : schemaShapeMap.entrySet()) {
             String key = entry.getKey();
             BaseSchema<V> schema = entry.getValue();
-            if (!schema.isValid(value.get(key))) {
+            V val = value.get(key);
+            if (val == null || !schema.isValid(val)) {
                 return false;
             }
         }

@@ -12,7 +12,9 @@ import java.util.Map;
 public class MapSchemaTest {
     @Test
     public void testRequired() {
-        MapSchema<String> schema = new MapSchema<String>().required();
+        var v = new Validator();
+
+        MapSchema<String> schema = v.map().required();
 
         assertTrue(schema.isValid(new HashMap<>()));
 
@@ -44,7 +46,5 @@ public class MapSchemaTest {
         data3.put("key3", "value3");
         assertFalse(schema.isValid(data3));
     }
-
-
 
 }

@@ -145,3 +145,79 @@ schema.isValid(7); // true
 schema.isValid(10); // true
 schema.isValid(11); // false
 ```
+
+### Валидация объектов типа Map
+
+Для валидации объектов типа Map используется класс MapSchema. Объект этого класса создается путем вызова метода map() на экземпляре класса Validator:
+
+```
+import hexlet.code.Validator;
+import java.util.Map;
+
+Validator v = new Validator();
+MapSchema schema = v.map();
+```
+
+После создания объекта MapSchema, он предоставляет следующие методы для настройки правил проверки:
+
+#### required()
+Делает поле обязательным для заполнения. После применения этого метода Map не может быть null.
+
+Пример использования:
+
+```
+MapSchema schema = v.map().required();
+schema.isValid(null); // false
+schema.isValid(new HashMap<>()); // true
+```
+#### sizeof(int size)
+Добавляет ограничение на размер Map. Количество пар ключ-значение в объекте Map должно быть равно заданному размеру.
+
+Пример использования:
+
+```
+MapSchema schema = v.map().sizeof(2);
+schema.isValid(new HashMap<>()); // false
+Map<String, Integer> map = new HashMap<>();
+map.put("a", 1);
+map.put("b", 2);
+schema.isValid(map); // true
+map.put("c", 3);
+schema.isValid(map); // false
+```
+
+#### Вложенная валидация
+
+При работе со сложными данными бывает нужно проверять не только сам объект Map, но и данные внутри него. Метод shape(Map<String, BaseSchema<?>> schemas) используется для определения свойств объекта Map и создания схемы для валидации их значений. Каждому свойству объекта Map привязывается свой набор ограничений (своя схема), что позволяет более точно контролировать данные:
+
+```
+// Создаем набор схем для проверки значений каждого ключа
+Map<String, BaseSchema<String>> schemas = new HashMap<>();
+
+// Определяем схемы валидации для значений свойств "firstName" и "lastName"
+schemas.put("firstName", v.string().required()); // Имя должно быть обязательной непустой строкой
+schemas.put("lastName", v.string().required().minLength(2)); // Фамилия должна быть обязательной строкой длиной не менее 2 символов
+
+// Настраиваем схему `MapSchema` с вложенными схемами
+MapSchema schema = v.map().shape(schemas);
+
+// Проверяем объекты
+Map<String, String> human1 = new HashMap<>();
+human1.put("firstName", "John");
+human1.put("lastName", "Smith");
+schema.isValid(human1); // true
+
+Map<String, String> human2 = new HashMap<>();
+human2.put("firstName", "John");
+human2.put("lastName", null); // Нарушено ограничение required для lastName
+schema.isValid(human2); // false
+
+Map<String, String> human3 = new HashMap<>();
+human3.put("firstName", "Anna");
+human3.put("lastName", "B"); // Нарушено ограничение minLength для lastName
+schema.isValid(human3); // false
+```
+
+В этом примере мы создаем MapSchema для валидации объектов Map, которые представляют человека. Для каждого ключа ("firstName" и "lastName") создается отдельная схема валидации с помощью v.string() и необходимыми ограничениями. Затем эти схемы объединяются в Map и передаются в метод shape().
+
+Метод shape() позволяет задать схему проверки для каждого ключа Map отдельно, что дает возможность более точно контролировать вложенные данные.
